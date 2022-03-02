@@ -1,0 +1,132 @@
+This question is designed to help you get a better understanding of basic heap operations.
+
+There are  types of query:
+
+"1 v" - Add an element  to the heap.
+"2 v" - Delete the element  from the heap.
+"3" - Print the minimum of all the elements in the heap.
+NOTE: It is guaranteed that the element to be deleted will be there in the heap. Also, at any instant, only distinct elements will be in the heap.
+
+Input Format
+
+The first line contains the number of queries, .
+Each of the next  lines contains one of the  types of query.
+
+Constraints
+
+
+Output Format
+
+For each query of type , print the minimum value on a single line.
+
+Sample Input
+
+STDIN       Function
+-----       --------
+5           Q = 5
+1 4         insert 4
+1 9         insert 9
+3           print minimum
+2 4         delete 4
+3           print minimum
+Sample Output
+
+4  
+9 
+Explanation
+
+After the first  queries, the heap contains {4,9}. Printing the minimum gives 4 as the output. Then, the  4th query deletes  4 from the heap, and the 5th query gives 9 as the output.
+
+*********************************************************************SOLUTION*************************************************************************
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int arr[1000000];
+int curr=-1;
+
+int mindex(int left,int right){
+    return arr[left]<arr[right]?left:right;
+}
+
+int find_index(int y){
+    for(int i=0;i<=curr;i++)
+    {
+        if(arr[i]==y)
+        return i;
+    }
+    return -1;
+}
+
+void heapifyUp(int index){
+    int parent=index/2;
+    if(arr[parent]<arr[index] || (parent==index))
+        return;
+    else{
+        int temp=arr[parent];
+        arr[parent]=arr[index];
+        arr[index]=temp;
+        heapifyUp(parent);
+    }
+return;
+}
+
+void heapifyDown(int index){
+    int left=2*index;
+    int right=2*index+1;
+    if(left<=curr && right<=curr){
+        if(arr[index]<arr[left] && arr[index]<arr[right])
+            return;
+        else{
+            int min_index=mindex(left,right);
+            int temp=arr[min_index];
+            arr[min_index]=arr[index];
+            arr[index]=temp;
+            heapifyDown(min_index);
+        }
+    }
+}
+
+void insert(int y){
+    arr[++curr]=y;
+    heapifyUp(curr);
+  
+}
+
+void delet(int y){
+int index=find_index(y);
+   
+    if(index!=-1){
+    arr[index]=arr[curr--];
+        heapifyDown(index);
+    }
+    
+
+}
+
+
+int main() {
+
+    int n,x,y;
+    scanf("%d",&n);
+    
+    while(n--){
+        scanf("%d",&x);
+        if(x==1){
+            scanf("%d",&y);
+            insert(y);
+        }
+        if(x==2){
+            scanf("%d",&y);
+            delet(y);
+        }
+        if(x==3){
+            if(curr>=0)
+                printf("%d\n",arr[0]);
+        }
+    }
+    
+    return 0;
+}
