@@ -1,0 +1,128 @@
+There is country with n cities numbered from 1 to n. Bheem stays in city 1. He needs to find out the distance of all cities from his city. The distance between two cities i and j is given by |i-j|. The total energy required by Bheem to travel between sequence of cities q1,q2....qk is given by sum(|qi-qi+1|) where i ranges from 1 to k. To ease Bheem travels there are hyperloops between the city. You cannot go backwards in hyperloops, So if city x and y has hyperloops between them the distance will become 1 from x to y and not y to x. In a country with n cities will definitely have n hyperloops. Hint: Try to create the graph structure first
+
+Input Format
+
+The first line contains an integer n the number of cities. The second line contains n integers as ai. Which means city i and ai has hyperloop between them (i.e: its given 6 7 8 3 then city {1 and 6}, {2 and 7}, {3 and 8}, {4 and 3} has hyperloop between them) Please note that the hyperloop don't allow walking in opposite directions (from ai to i).
+
+Constraints
+
+(1 ≤ n ≤ 200 000) (i ≤ ai ≤ n ,ai ≤ai+1 ≤n(for all values of i)
+
+Output Format
+
+In the only line print n integers m1,m2,...,mn, where mi denotes the least amount of distance required to walk from city 1 to city i.
+
+Sample Input 0
+
+3
+2 2 3
+Sample Output 0
+
+0 1 2
+Explanation 0
+
+In the first sample case desired sequences are:
+
+1:1,1; m1=0;
+
+2:1,2; m2=1;
+
+3:1,3; m3=|3-1|=2.
+
+Submissions: 19
+Max Score: 20
+Difficulty: Medium
+Rate This Challenge:
+
+    
+More
+
+********************************************************************SOLUTION********************************************************************
+
+#include <iostream>
+#include <queue>
+#include <tuple>
+using namespace std;
+
+struct Graph
+{
+    int Size;
+    int **Distaces;
+    Graph(int size)
+    {
+        Size = size;
+        Distaces = new int *[size];
+        for (int i = 0; i < size; i++)
+        {
+            Distaces[i] = new int[size];
+        }
+        for (int i = 0; i < size; i++)
+        {
+            for (int j = 0; j < size; j++)
+            {
+                int cost = j - i;
+                Distaces[i][j] = cost > 0 ? cost : -cost;
+            }
+        }
+    }
+    void EnterEdge(int i, int j, int w)
+    {
+        Distaces[i][j] = w;
+    }
+    int *Dijkstra(int source)
+    {
+        int *cost = new int[Size];
+        for (int i = 0; i < Size; i++)
+        {
+            cost[i] = -1;
+        }
+        priority_queue<tuple<int, int>> q;
+        q.push({0, source});
+        cost[source]=0;
+        while (!q.empty())
+        {
+            tuple<int, int> pair = q.top();
+            int node = get<1>(pair);
+            int costofnode = -get<0>(pair);
+            q.pop();
+            for(int i=0;i<Size;i++)
+            {
+                if(node!=i)
+                {
+                    int newcost = costofnode + Distaces[node][i];
+                    if(cost[i]==-1 || cost[i]>newcost)
+                    {
+                        cost[i]=newcost;
+                        q.push({-newcost, i});
+                    }
+                }
+            }
+        }
+        return cost;
+    }
+    ~Graph()
+    {
+        for(int i=0;i<Size;i++)
+        {
+            delete[] Distaces[i];
+        }
+        delete[] Distaces;
+    }
+};
+
+int main()
+{
+    int N, i, x;
+    cin >> N;
+    Graph g(N);
+    for (i = 0; i < N; i++)
+    {
+        cin >> x;
+        g.EnterEdge(i, --x, 1);
+    }
+    int *costs = g.Dijkstra(0);
+    for (i = 0; i < N; i++)
+    {
+        cout << costs[i] << " ";
+    }
+}
