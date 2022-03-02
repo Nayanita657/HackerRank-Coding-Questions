@@ -1,0 +1,85 @@
+Given an array A of N integers, sort the array in increasing order using Quick Sort.
+
+Note: Use of inbuillt sort function is not allowed. Soluions using the same shall be considered invalid.
+
+Input Format
+
+First line of input contains N i.e. the number of elements in the array.
+Second line contains N space-separated integers which are the elements of the array A.
+Constraints
+
+1 <= N <= 10^3
+1 <= A[i] <= 10^5
+Output Format
+
+Print all the elements of the resultant array after sorting the values in a space-separated manner.
+
+Sample Input 0
+
+5
+12 31 9 11 5
+Sample Output 0
+
+5 9 11 12 31
+
+********************************************************************SOLUTION**************************************************************
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int partition(int *arr, int low_index, int high_index)
+{
+    int temp=arr[high_index];
+    int i=low_index-1;
+    
+    for(int j=low_index; j<=high_index-1; j++)
+    {
+        if(arr[j]<=temp)
+        {
+            i=i+1;
+            int temp1=arr[j];
+            arr[j]=arr[i];
+            arr[i]=temp1;
+        }
+    }
+    arr[high_index]=arr[i+1];
+    arr[i+1]=temp;
+    
+    return i+1;
+}
+
+void Quicksort(int *arr, int low_index, int high_index)
+{
+    if(low_index < high_index)
+    {
+        int piv_pos= partition(arr, low_index, high_index);
+        Quicksort(arr, low_index, piv_pos-1);
+        Quicksort(arr, piv_pos+1, high_index);
+    }
+}
+
+
+void display(int *arr,int size)
+{
+    for(int i=0;i<size;i++)
+        printf("%d ",arr[i]);
+}
+int main() {
+    int size;
+    scanf("%d",&size);
+    
+    int arr[size];
+    for(int i=0;i<size;i++)
+         scanf("%d",&arr[i]);
+    
+    int low_index=0;
+    int high_index=size-1;
+    
+    Quicksort(arr,low_index , high_index);
+    
+    display(arr,size);
+    
+    return 0;
+}
