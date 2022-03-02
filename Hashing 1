@@ -1,0 +1,99 @@
+Find the Highest possible Rating of given array A after applying some queries. Rating of an array is highest occourence of a element in the given array. Provided with the the Number P and S . For Each element in the given Array A , Perform Addition or Subtraction with P atmost S times. Find Highest Ratings Possible for Given Array after applying queries to each element.
+
+note : you can add 1 in 1st element and subtract 1 from 3rd element to get highest frequency of 2 , i.e. 3
+
+Input Format
+
+First line of Input contains integer P
+Second line contains integer S
+Third line contains integer N
+Fourth line contains N elements representing elements of array A
+Constraints
+
+1<=N<=1000000
+1<=P<=100
+1<=S<=10
+1<=Ai<=1000000
+Output Format
+
+Output the highest possible rating of array A after applying Queries.
+
+**********************************************************SOLUTION*****************************************************************************
+
+#include <iostream>
+#include <vector>
+#include <bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    
+    //incrementing/decrementing number
+    //cout<<"Enter incrementing number:\n";
+    int P;
+    cin>>P;
+    
+    //atmost how many times
+    //cout<<"atmost how many time:\n";
+    int S;
+    cin>>S;
+    
+    //size of array;
+    //cout<<"enter the size of array:";
+    long long size;
+    cin>>size;
+    
+    //inserting array elements
+    vector<long long> input_arr(size);
+    for(int i=0;i<size;i++)
+        cin>>input_arr[i];
+        
+    /*cout<<"array elements:\n" ;   
+    for(int i=0;i<size;i++)
+        cout<<input_arr[i];*/
+        
+    long long new_size=size*((2*S)+1);    
+    vector<long long> cal_array(new_size);
+    long long k=0;
+    for(int i=0;i<size;i++)
+    {
+        for(int j=0;j<S+1;j++)
+        {
+            if(j==0)
+            {
+                cal_array[k]=input_arr[i];
+                k++;
+            }
+            else
+            {
+                cal_array[k]=input_arr[i]+(j*P);
+                k++;
+                cal_array[k]=input_arr[i]-(j*P);
+                k++;
+                
+            }
+        }
+    }
+    
+    /*cout<<"operation array";
+    for (auto i = cal_array.begin(); i != cal_array.end(); ++i)
+        cout << *i << " ";*/
+        
+    unordered_map<long long, long long> umap;
+    for(auto x:cal_array)
+        umap[x]++;
+        
+    //cout<<"\nfrequency count\n";
+    long long MAX=0;
+    long long element;
+    for (auto itr = umap.begin(); itr != umap.end(); itr++) 
+    {
+        if(MAX < itr->second )
+        {
+            element=itr->first;
+            MAX=itr->second;
+        }
+    }
+    cout<<MAX;
+  return 0;
+}
