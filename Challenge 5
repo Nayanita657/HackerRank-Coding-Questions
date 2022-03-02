@@ -1,0 +1,70 @@
+Given an NXN matrix A, you are required to rotate it by 90 degrees in clockwise direction.
+
+Input Format
+
+First line of input contains the valuue of N .
+Next N lines contain N space-separated integers which are the elements of the matrix.
+Constraints
+
+1<= N <= 10^3
+1 <= A[i][j] <=10^5
+Output Format
+
+Output should contain N lines each having N integers representing the rotated matrix.
+
+Sample Input 0
+
+2
+1 11
+2 21
+Sample Output 0
+
+2 1
+21 11
+
+********************************************************SOLUTION***********************************************************************************
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main()
+{
+    int size;
+    scanf("%d",&size);
+    
+    int arr[size][size];
+    for(int i=0;i<size;i++)
+    {
+        for(int j=0;j<size;j++)
+            scanf("%d",&arr[i][j]);
+    }
+    //rotate90Clockwise(arr,size);
+    
+    
+   
+        for (int i = 0; i < size / 2; i++) {
+            for (int j = i; j < size - i - 1; j++) 
+            {
+                // Swap elements of each cycle
+                // in clockwise direction
+                int temp = arr[i][j];
+                arr[i][j] = arr[size - 1 - j][i];
+                arr[size - 1 - j][i] = arr[size - 1 - i][size - 1 - j];
+                arr[size - 1 - i][size - 1 - j] = arr[j][size - 1 - i];
+                arr[j][size - 1 - i] = temp;
+            }
+        }
+    
+    //printMatrix(arr,size);
+
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++)
+             printf("%d ",arr[i][j]);
+        printf("\n");
+    }
+
+    
+    return 0;
+}
