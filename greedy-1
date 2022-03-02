@@ -1,0 +1,73 @@
+here is an array Arr of size N, the problem is to find pairs (i, j) such that it satisfies the below inequality:- (Arr[i] | Arr[j]) – (Arr[i] & Arr[j]) = (Arr[i] – Arr[j]); Where “|” denotes bitwise OR and “&” denotes bitwise AND operators.
+
+Input Format
+
+First line show be T which denotes number of test cases.
+First line of each test cases contains an integer N.
+Second line of each test cases contains N space-separated integer denoting array Arr.
+Constraints
+
+image
+
+Output Format
+
+For each test case, print the number of pairs, in a new line, satisfying the equation.
+
+*************************************************************SOLUTION*****************************************************************************
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+
+
+
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    int no_of_testcase;
+    cin>>no_of_testcase;
+    for(int k=0;k<no_of_testcase;k++)
+    {
+        int count=0;
+        int size;
+        cin>>size;
+    
+        int arr[size];
+        for(int i=0;i<size;i++)
+            cin>>arr[i];
+        
+        for(int i=0;i<size;i++)
+        {
+            for(int j=0;j<size;j++)
+            {
+                int or_ope;
+                int and_ope;
+                int diff;
+                int diff_or_and;
+                or_ope=arr[i]|arr[j];
+                and_ope=arr[i]&arr[j];
+                diff=arr[i]-arr[j];
+                diff_or_and=or_ope - and_ope;
+            
+                if(diff==diff_or_and)
+                {
+                    count++;
+                
+                }
+            
+            
+            }
+        }
+        cout<<count;
+    }
+    
+
+    return 0;
+}
