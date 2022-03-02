@@ -1,0 +1,122 @@
+Given an array A of N integers. Rearrange the array in non-decreasing order.
+
+Expected time complexity - O(N)
+
+Input Format
+
+First line of input contains N i.e. the number of elements in the array.
+Second line contains N space-separated integers which are the elements of the array A.
+Constraints
+
+1 <= T <= 30
+1 <= N <= 10^5
+1 <= A[i] <= 10^3
+Output Format
+
+Print T lines. ith line contains all the elements of the resultant array after rearranging the values for the ith test case in a space-separated manner.
+
+Sample Input 0
+
+2
+5
+20 4 17 56 18
+3
+4 1 5
+Sample Output 0
+
+4 17 18 20 56
+1 4 5
+
+**************************************************************SOLUTION***********************************************************************************
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+void swap(int *p1, int *p2)
+{
+    int temp1=*p2;
+    *p2=*p1;
+    *p1=temp1;
+    
+}
+void heapify(int *heap, int n, int i)
+{
+    int min = i; 
+    int left = 2 * i + 1; 
+    int right = 2 * i + 2; 
+  
+   
+    if (left < n && heap[left] < heap[min])
+        min = left;
+  
+  
+    if (right < n && heap[right] < heap[min])
+        min = right;
+  
+    
+    if (min != i) {
+        swap(&heap[i], &heap[min]);
+  
+        
+        heapify(heap, n, min);
+    }
+}
+
+void buildHeap(int *heap, int heap_size)
+{
+    int startIdx = (heap_size / 2) - 1;
+  
+   
+    for (int i = startIdx; i >= 0; i--) {
+        heapify(heap, heap_size, i);
+    }
+}
+
+void printHeap(int *heap, int heap_size)
+{
+    //printf("Array representation of Heap is:\n");
+  
+    for (int i = 0; i < heap_size; ++i)
+        printf("%d ",heap[i]);
+}
+
+int main() {
+
+    int no_of_input;
+    scanf("%d",&no_of_input);
+    for(int i=0;i<no_of_input;i++)
+    {
+        int heap_size;
+        scanf("%d",&heap_size);
+        
+        int arr[heap_size];
+        
+        
+        
+        for(int j=0;j<heap_size;j++)
+        {
+            scanf("%d",&arr[j]);
+             
+        }
+        buildHeap(arr, heap_size);
+        //printHeap(arr, heap_size);
+        int size=heap_size; 
+        int sorted_arr[heap_size];
+        int start_index=0;
+        int index=0;
+        while(heap_size>0)
+        {
+            sorted_arr[index]=arr[start_index];
+            arr[start_index]=arr[heap_size-1];
+            heap_size=heap_size-1;
+            heapify(arr, heap_size, start_index);
+            index++;
+        
+        }
+        printHeap(sorted_arr, size);
+        printf("\n");
+    } 
+    return 0;
+}
