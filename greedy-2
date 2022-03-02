@@ -1,0 +1,83 @@
+For a given integer X, find out the smallest number N such that N has exactly X digits and none of the digits in N is 0. Also the product of digits in number N is greater than or equal to sum of digits in number N.
+
+Input Format
+
+The first line contains an integer T denoting the number of test cases.
+For each test case, the first line contains an integer X.
+Constraints
+
+image
+
+Output Format
+
+For each test case in a new line, print the smallest number N that satisfies the given condition.
+
+************************************************************SOLUTION*****************************************************************************
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+
+    int t;
+    cin >> t;
+    while (t--)
+    {
+        int X;
+        cin >> X;
+        if (X == 1)
+        {
+            cout << "1\n";
+        }
+        else if (X == 2)
+        {
+            cout << "22\n";
+        }
+        else
+        {
+            int *array = new int[X], i;
+            for (i = 0; i < X; i++)
+            {
+                array[i] = 1;
+            }
+            while(1)
+            {
+                i = X - 1;
+                int loop_again = 0;
+                do
+                {
+                    array[i]=array[i]+1;
+                    if (array[i] == 10)
+                    {
+                        array[i] = 1;
+                        loop_again = 1;
+                    }
+                    else
+                    {
+                        loop_again = 0;
+                    }
+                    i--;
+                } while (loop_again > 0);
+                int sod = 0, pod = 1;
+                for (i = 0; i < X; i++)
+                {
+                    sod += array[i];
+                    pod *= array[i];
+                }
+                if (pod >= sod)
+                {
+                    for (i = 0; i < X; i++)
+                    {
+                        cout << array[i];
+                    }
+                    cout << "\n";
+                    break;
+                }
+            }
+        }
+    }
+    return 0;
+}
