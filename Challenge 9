@@ -1,0 +1,88 @@
+Given starting and end time of N meetings. One meeting room can be used for only one meeting at a time. Find the minimum number of rooms required to accomodate all the meetings. Starting and end time of a meeting cannot be same. However, start time for a meeting can be equal to end time of another meeting(in this case it is required to allot two different rooms to the meetings starting and ending at that time).
+
+Time is represented in 24-hour format.
+
+Example : 7:30 PM is represented as 1930.
+
+Input Format
+
+First line of input contains the value of N i.e. the number of meetings to be held.
+Second line contains N space-separated integers which is the list of start times.
+Third line contains N space-separated integers which is the list of end time.
+Constraints
+
+1 <= N <= 1000
+Output Format
+
+Print a single integer which is the minimum number of meeting rooms required.
+
+Sample Input 0
+
+3
+0930 1145 1200 
+1000 1230 1215
+Sample Output 0
+
+2
+Sample Input 1
+
+2
+0800 0900
+0900 0930
+Sample Output 1
+
+2
+
+****************************************************************SOLUTION***********************************************************************
+
+
+#include <bits/stdc++.h>
+#include <iostream>
+
+using namespace std;
+
+int meeting(int s[],int e[],int n)
+{
+    int i=1;
+    int j=0;
+    int min_meeting=1;
+    int ongoing_meeting=1;
+    while(i<n&&j<n)
+    {
+        if(e[j]>=s[i])
+        {
+            ongoing_meeting++;
+            if(min_meeting<ongoing_meeting)
+            {
+                min_meeting=ongoing_meeting;
+            }
+            i++;
+        }
+        else{
+            ongoing_meeting--;
+            j++;
+        }
+    }
+    return min_meeting;
+}
+
+
+int main()
+{
+    int n;
+    cin>>n;
+    int s[n],e[n];
+    for(int i=0;i<n;i++)
+    {
+        cin>>s[i];
+    }
+    for(int i=0;i<n;i++)
+    {
+        cin>>e[i];
+    }
+    sort(s,s+n);
+    sort(e,e+n);
+    cout<<meeting(s,e,n);
+    return 0;
+    
+}
