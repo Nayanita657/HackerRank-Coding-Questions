@@ -1,0 +1,118 @@
+Jay and Veeru are trying to solve a problem. They have a lowercase english letter string. Jay is trying to take a multiple z small substring of the given string with x as start index and y as end index. He then tries to repeats each letter in the subsegment p times, where p is the index of the corresponding letter in the alphabet (a=1, b=2....., z=26). so if substring is "abc", Jay converts it to "abbccc". Veeru wants to know the length of the new string obtained by jay. Kindly help Veeru to find length of new string given by Jay
+
+Input Format
+
+The first line contains two integers n and z (1≤n≤10^5, 1≤z≤10^5) where n is length of string and z is number of substring
+
+The second line contains one string consisting of lowercase letters of English letters whose length is n.
+
+Next z line contains Jay start index x and end index y of substring
+
+Constraints
+
+1≤n≤10^5 1≤z≤10^5 1≤x≤y≤n
+
+Output Format
+
+Print z lines: for each question print the length of the string obtained by Jay
+
+Sample Input 0
+
+7 3
+abacaba
+1 3
+2 5
+1 7
+Sample Output 0
+
+4
+7
+11
+Explanation 0
+
+In the first example Veeru is interested in three new string created by Jay. In the first substring Veeru considers the substring "aba", that transforms to "abba", so the answer is equal to 4. In the second substring Veeru considers "baca", that transforms to "bbaccca", so the answer is 7. In the third question Veeru considers the string "abacaba",that transforms to "abbacccabba" of length 11.
+
+************************************************************************SOLUTION*********************************************************************
+
+
+#include <cmath>
+#include <cstdio>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+#include <set>
+
+
+using namespace std;
+
+
+int main()
+{
+    int size,no_of_sub_string;
+    int input[2];
+    for(int i=0;i<2;i++)
+    {
+        cin>>input[i];
+    }
+    size=input[0];
+    no_of_sub_string=input[1];
+    
+    //creating multiset
+    multiset<pair<char,int>> list;
+    list.insert(make_pair('a',1));
+    list.insert(make_pair('b',2));
+    list.insert(make_pair('c',3));
+    list.insert(make_pair('d',4));
+    list.insert(make_pair('e',5));
+    list.insert(make_pair('f',6));
+    list.insert(make_pair('g',7));
+    list.insert(make_pair('h',8));
+    list.insert(make_pair('i',9));
+    list.insert(make_pair('j',10));
+    list.insert(make_pair('k',11));
+    list.insert(make_pair('l',12));
+    list.insert(make_pair('m',13));
+    list.insert(make_pair('n',14));
+    list.insert(make_pair('o',15));
+    list.insert(make_pair('p',16));
+    list.insert(make_pair('q',17));
+    list.insert(make_pair('r',18));
+    list.insert(make_pair('s',19));
+    list.insert(make_pair('t',20));
+    list.insert(make_pair('u',21));
+    list.insert(make_pair('v',22));
+    list.insert(make_pair('w',23));
+    list.insert(make_pair('x',24));
+    list.insert(make_pair('y',25));
+    list.insert(make_pair('z',26));
+    
+    
+    
+    
+    string input_string;
+    cin>>input_string;
+    
+    
+    for(int i=0;i<no_of_sub_string;i++)
+    {
+        int length=0;
+        int  start_index ,end_index;
+        cin>>start_index;
+        cin>>end_index;
+        
+        for(int j=start_index-1;j<=end_index-1;j++)
+        {
+            char data=input_string[j];
+            for(auto x:list)
+            {
+                if(x.first==data)
+                    length=length+x.second;
+            }
+        }
+        cout<< length<<"\n";
+        
+        
+    }
+
+    return 0;
+}
