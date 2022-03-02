@@ -1,0 +1,77 @@
+Given a sorted array A of N integers, your task is to search for a given key K. For this, you need to implement Ternary search.
+
+Ternary search is a divide-and-conquer algorithm similar to binary search. The difference is that in ternary search, we divide the array into 3 parts and check which part contains the key.
+
+Print 1 if Search is Successful i.e. the key is found, Else print 0.
+
+Input Format
+
+First line of the input contains two space-separated integers, N and K
+Second line contains N space-separated integers which are the elements of the array A.
+Constraints
+
+0 < N <= 10^5
+0 < A[i], K <= 10^8
+Output Format
+
+Print 1 if Search is Successful i.e. the key is found, Else print 0.
+Sample Input 0
+
+5 12
+11 12 21 51 108
+Sample Output 0
+
+1
+
+******************************************************************SOLUTION***********************************************************************
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int binary_search(int *arr,int left_index,int right_index,int key)
+{
+    
+    while(left_index<=right_index)
+    {
+        int mid=(left_index + right_index)/2;
+        if(arr[mid]>key)
+            right_index=mid-1;
+        if(arr[mid]<key)  
+            left_index=mid+1;
+        if(arr[mid]==key)
+            return 1;
+    }
+    return 0;
+    
+}
+
+int main() {
+    int size,key;
+    scanf("%d",&size);
+    int arr[size];
+    
+    scanf("%d",&key);
+    
+    for(int i=0;i<size;i++)
+        scanf("%d",&arr[i]);
+    
+    int left_index=0;
+    int right_index=size-1;
+    
+    int each_part_ele=ceil(size/3);
+    
+    int result1=binary_search(arr, left_index, each_part_ele-1, key);
+    int result2=binary_search(arr, each_part_ele, 2*each_part_ele-1, key);
+    int result3=binary_search(arr, 2*each_part_ele, right_index, key);
+    
+    if(result1==1 || result2==1 || result3==1)
+        printf("1");
+    else
+        printf("0");
+    
+    
+      
+    return 0;
+}
